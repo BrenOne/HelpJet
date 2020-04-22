@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(number, null, sms, null, null);
                     Toast.makeText(getApplicationContext(),
-                            "SMS Sent!", Toast.LENGTH_LONG).show();
+                            "SMS Sent!  ", Toast.LENGTH_LONG).show();
                     /*Пытаемся отправить сообщение и и вложить в это любви(координат)*/
                 } catch (Exception e) {
                     /* Если произошла ошибка выводим тост с ошибкой отправки */

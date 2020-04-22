@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/smsmms/AndroidStudioProjects-HelpJet3-smsmms.iml" filepath="$PROJECT_DIR$/smsmms/AndroidStudioProjects-HelpJet3-smsmms.iml" group="HelpJet/smsmms" />
+      <module fileurl="file://$PROJECT_DIR$/smsmms/BrenOne-AndroidStudioProjects-HelpJet3-smsmms.iml" filepath="$PROJECT_DIR$/smsmms/BrenOne-AndroidStudioProjects-HelpJet3-smsmms.iml" group="HelpJet/smsmms" />
+      <module fileurl="file://$PROJECT_DIR$/smsmms/BrenOne-AndroidStudioProjects-HelpJet3-smsmms~1.iml" filepath="$PROJECT_DIR$/smsmms/BrenOne-AndroidStudioProjects-HelpJet3-smsmms~1.iml" group="HelpJet/smsmms" />
+      <module fileurl="file://$PROJECT_DIR$/smsmms/BrenOne-AndroidStudioProjects-HelpJet3-smsmms~2.iml" filepath="$PROJECT_DIR$/smsmms/BrenOne-AndroidStudioProjects-HelpJet3-smsmms~2.iml" group="HelpJet/smsmms" />
+      <module fileurl="file://$PROJECT_DIR$/HelpJet.iml" filepath="$PROJECT_DIR$/HelpJet.iml" group="HelpJet" />
+      <module fileurl="file://$PROJECT_DIR$/smsmms/HelpJet3-smsmms.iml" filepath="$PROJECT_DIR$/smsmms/HelpJet3-smsmms.iml" group="HelpJet/smsmms" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="HelpJet/app" />
+      <module fileurl="file://$PROJECT_DIR$/smsmms/smsmms.iml" filepath="$PROJECT_DIR$/smsmms/smsmms.iml" group="HelpJet/smsmms" />
+    </modules>
+  </component>
+</project>
