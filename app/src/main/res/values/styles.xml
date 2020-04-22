@@ -1,0 +1,8 @@
+<resources>
+    <style name="OmoledDark">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorAmoledDark</item>
+        <item name="colorPrimaryDark">@color/colorAmoledDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+</resources>

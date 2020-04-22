@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HelpJet</string>
+    <string name="smsError">SMS failed, please try again later!</string>
+    <string name="smsDefBody">Привет, я попал в экстренную ситуацию, перезвони мне. Если я не выйду на связь вот мои Координаты:</string>
+</resources>
