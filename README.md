@@ -1,7 +1,7 @@
 # HelpJet v0.2(alpha-test)
 My project for ITSchool Samsung
 This Project can save your life.
-
+![HelpJetPic](/pic.png)
 ## Overview
 
 App has this function:
