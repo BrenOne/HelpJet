@@ -9,6 +9,7 @@ App has this function:
 Send SMS Messages(with delay) to your selected contacts with your Location if you you have an emergency.
 
 You can to edit this message as you want. (Not in alpha)
+
 App can activate Low-Power mode for saving battery power. (Not in alpha)
 
 ### Recommended Requirements
