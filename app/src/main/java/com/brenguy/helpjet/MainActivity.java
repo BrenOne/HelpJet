@@ -17,8 +17,34 @@ import android.widget.Toast;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.content.Context;
 
 import androidx.core.app.ActivityCompat;
+
+class MyLocationListener implements LocationListener {
+
+    static Location imHere; // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
+
+    public static void SetUpLocationListener(Context context) {
+        LocationManager locationManager = (LocationManager)
+                context.getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new MyLocationListener();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+        imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    }
+
+    @Override
+    public void onLocationChanged(Location loc) {
+        imHere = loc;
+    }
+    @Override
+    public void onProviderDisabled(String provider) {}
+    @Override
+    public void onProviderEnabled(String provider) {}
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
+}
 
 public class MainActivity extends Activity {
     // Обьявляем переменные
@@ -29,9 +55,7 @@ public class MainActivity extends Activity {
     TextView tvLat;
     TextView tvGpsstatus;
 
-    private LocationManager locationManager;
-    StringBuilder sbGPS = new StringBuilder();
-    StringBuilder sbNet = new StringBuilder();
+    static Location imHere; // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +67,6 @@ public class MainActivity extends Activity {
         tvLat = findViewById(R.id.tvLat);
         tvGpsstatus = findViewById(R.id.tvGpsstatus);
         /* Пускаем слушателя кнопки "Отправить" */
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         buttonSend.setOnClickListener(new OnClickListener() {
             @Override
@@ -73,9 +96,5 @@ public class MainActivity extends Activity {
                         android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             }
         });
-    }
-    public void onClickLocationSettings(View view) {
-        startActivity(new Intent(
-                android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
 }
