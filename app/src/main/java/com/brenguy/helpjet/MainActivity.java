@@ -54,11 +54,9 @@ public class MainActivity extends Activity {
     TextView tvLong;
     TextView tvLat;
     TextView tvGpsstatus;
-
-    static Location imHere; // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        MyLocationListener.SetUpLocationListener(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonSend = findViewById(R.id.btnSend);
@@ -72,7 +70,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String number = editPhone.getText().toString();
-                String sms = getString(R.string.smsDefBody);
+                String sms = getString(R.string.smsDefBody) + MyLocationListener.imHere;
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(number, null, sms, null, null);
