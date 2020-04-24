@@ -1,37 +1,43 @@
 package com.brenguy.helpjet;
 
-import java.util.Date;
-
 import android.Manifest;
-import android.content.pm.PackageManager;
-import android.telephony.gsm.SmsManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.telephony.gsm.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.content.Context;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import static android.Manifest.permission.SEND_SMS;
 
 class MyLocationListener implements LocationListener {
 
     static Location imHere; // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
 
-    public static void SetUpLocationListener(Context context) {
+    public static void SetUpLocationListener(Context context) // это нужно запустить в самом начале работы программы
+    {
         LocationManager locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener locationListener = new MyLocationListener();
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-        imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        imHere = (locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
     }
 
     @Override
@@ -47,46 +53,65 @@ class MyLocationListener implements LocationListener {
 }
 
 public class MainActivity extends Activity {
+
+    final int SEND_SMS_PERMISSION_REQUEST_CODE = 1;
     // Обьявляем переменные
     Button buttonSend;
     Button locationSet;
     EditText editPhone;
-    TextView tvLong;
     TextView tvLat;
-    TextView tvGpsstatus;
+    Button btnGPS;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         MyLocationListener.SetUpLocationListener(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         buttonSend = findViewById(R.id.btnSend);
         locationSet = findViewById(R.id.btnlocationsettings);
         editPhone = findViewById(R.id.editPhone);
         tvLat = findViewById(R.id.tvLat);
-        tvGpsstatus = findViewById(R.id.tvGpsstatus);
+
+        editPhone.setEnabled(false);
+        if(checkPermission(SEND_SMS)) {
+            editPhone.setEnabled(true);
+        }else{
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PERMISSION_REQUEST_CODE);
+        }
+
         /* Пускаем слушателя кнопки "Отправить" */
 
         buttonSend.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 String number = editPhone.getText().toString();
-                String sms = getString(R.string.smsDefBody) + MyLocationListener.imHere;
-                try {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage(number, null, sms, null, null);
-                    Toast.makeText(getApplicationContext(),
-                            "SMS Sent!  ", Toast.LENGTH_LONG).show();
-                    /*Пытаемся отправить сообщение и и вложить в это любви(координат)*/
-                } catch (Exception e) {
-                    /* Если произошла ошибка выводим тост с ошибкой отправки */
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.smsError),
-                            Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
+                String sms = getString(R.string.smsDefBody) + (String.format(String.valueOf(MyLocationListener.imHere)).substring(12,34));
+                if (number == null || number.length() == 0) {
+                    return;
                 }
+                if (checkPermission(SEND_SMS)){
+                    SmsManager sm = SmsManager.getDefault();
+                    sm.sendTextMessage(number, null, sms, null, null);
+                    Toast.makeText(getApplicationContext(),
+                            "SMS Sent!", Toast.LENGTH_LONG).show();
+                }
+
+                    /* Если произошла ошибка выводим тост с ошибкой отправки */
+                    Toast.makeText(getApplicationContext(), getString(R.string.smsError), Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+
+// Пускаем слушателя кнопки "Настройка геолокации"
+        btnGPS.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvLat.setText((String.format(String.valueOf(MyLocationListener.imHere)).substring(12,34)));
             }
         });
-// Пускаем слушателя кнопки "Настройка геолокации"
         locationSet.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,5 +119,11 @@ public class MainActivity extends Activity {
                         android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             }
         });
+
+    }
+
+        public boolean checkPermission(String sendSms) {
+            int check = ContextCompat.checkSelfPermission(this, sendSms);
+            return (check == PackageManager.PERMISSION_GRANTED);
     }
 }
