@@ -111,9 +111,11 @@ public class MainActivity extends Activity {
                         Settings settings = new Settings();
                         settings.setUseSystemSending(true);
                         Transaction transaction = new Transaction(getApplicationContext(), settings);
-                        Message message = new Message(sms, phones[i]);
-                        transaction.sendNewMessage(message, NO_THREAD_ID);
-                        Toast.makeText(getApplicationContext(), "SMS Sent to " + phones[i], Toast.LENGTH_LONG).show();
+                        if (phones[i] != ""){
+                            Message message = new Message(sms, phones[i]);
+                            transaction.sendNewMessage(message, NO_THREAD_ID);
+                            Toast.makeText(getApplicationContext(), "SMS Sent to " + phones[i], Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }});
