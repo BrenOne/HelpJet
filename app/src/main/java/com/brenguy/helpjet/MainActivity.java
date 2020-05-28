@@ -1,10 +1,12 @@
 package com.brenguy.helpjet;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -68,11 +70,13 @@ public class MainActivity extends Activity {
     Button btnGPS;
     Button buttonSet;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         MyLocationListener.SetUpLocationListener(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ImageView buttonSend = findViewById(R.id.imageView);
         locationSet = findViewById(R.id.btnlocationsettings);
         tvLat = findViewById(R.id.tvLat);

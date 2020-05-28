@@ -2,9 +2,11 @@ package com.brenguy.helpjet;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +19,12 @@ public class contacts extends AppCompatActivity {
     public String SAVED_PHONE1 = "";
     public String SAVED_PHONE2 = "";
     public String SAVED_PHONE3 = "";
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Button save = findViewById(R.id.save);
         loadText();
         save.setOnClickListener(new View.OnClickListener() {
